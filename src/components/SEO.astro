@@ -1,0 +1,85 @@
+---
+import { clinic } from "../config/clinic";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title = clinic.seo.defaultTitle,
+  description = clinic.seo.defaultDescription,
+  ogImage = clinic.seo.ogImage,
+  canonicalUrl,
+} = Astro.props;
+
+const siteUrl = clinic.seo.siteUrl;
+const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
+const canonical = canonicalUrl || Astro.url.href;
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="keywords" content={clinic.seo.keywords.join(", ")} />
+<meta name="author" content={clinic.name} />
+
+<!-- Canonical -->
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={fullOgImage} />
+<meta property="og:site_name" content={clinic.name} />
+<meta property="og:locale" content="en_IN" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonical} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={fullOgImage} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": clinic.name,
+  "description": description,
+  "url": siteUrl,
+  "telephone": clinic.phone,
+  "email": clinic.email,
+  "image": fullOgImage,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": `${clinic.address.line1}, ${clinic.address.line2}`,
+    "addressLocality": clinic.address.area.split(",")[0].trim(),
+    "addressRegion": "Delhi",
+    "postalCode": clinic.address.pincode,
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "28.5",
+    "longitude": "77.2"
+  },
+  "openingHoursSpecification": clinic.hours.map(h => ({
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": h.day,
+    "opens": h.time.split("–")[0]?.trim(),
+    "closes": h.time.split("–")[1]?.trim()
+  })),
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": clinic.stats.googleRating,
+    "reviewCount": clinic.stats.googleReviews,
+    "bestRating": "5"
+  },
+  "priceRange": "₹₹"
+})} />

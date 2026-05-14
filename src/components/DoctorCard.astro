@@ -1,0 +1,74 @@
+---
+interface Props {
+  doctor: {
+    name: string;
+    qualifications: string;
+    experience: string;
+    bio: string;
+    photo: string;
+    specializations?: string[];
+    languages?: string[];
+  };
+  compact?: boolean;
+}
+
+const { doctor, compact = false } = Astro.props;
+---
+
+<div class="group bg-white rounded-2xl border border-border hover:border-primary/20 hover:shadow-xl transition-all duration-300 overflow-hidden">
+  <!-- Photo -->
+  <div class="relative overflow-hidden">
+    <img
+      src={doctor.photo}
+      alt={`${doctor.name} - ${doctor.qualifications}`}
+      class={`w-full object-cover object-top group-hover:scale-105 transition-transform duration-500 ${compact ? 'h-56' : 'h-64 md:h-72'}`}
+      width="400"
+      height="300"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+    <!-- Experience badge -->
+    <div class="absolute bottom-3 left-3 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-md">
+      <span class="text-xs font-semibold text-primary">{doctor.experience} Experience</span>
+    </div>
+  </div>
+
+  <!-- Info -->
+  <div class={compact ? 'p-5' : 'p-6 md:p-8'}>
+    <h3 class={`font-heading font-semibold text-text mb-1 ${compact ? 'text-lg' : 'text-xl'}`}>
+      {doctor.name}
+    </h3>
+    <p class="text-sm text-primary font-medium mb-3">
+      {doctor.qualifications}
+    </p>
+
+    {!compact && (
+      <p class="text-sm text-text-muted leading-relaxed mb-4">
+        {doctor.bio}
+      </p>
+    )}
+
+    {/* Specializations */}
+    {doctor.specializations && doctor.specializations.length > 0 && (
+      <div class="mb-3">
+        <div class="flex flex-wrap gap-1.5">
+          {doctor.specializations.map((spec) => (
+            <span class="text-xs bg-primary/8 text-primary font-medium px-2.5 py-1 rounded-full">
+              {spec}
+            </span>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {/* Languages */}
+    {doctor.languages && doctor.languages.length > 0 && !compact && (
+      <div class="flex items-center gap-2 text-xs text-text-muted pt-3 border-t border-border">
+        <svg class="w-4 h-4 text-text-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+        </svg>
+        <span>Speaks: {doctor.languages.join(", ")}</span>
+      </div>
+    )}
+  </div>
+</div>

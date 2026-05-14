@@ -1,0 +1,199 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import DoctorCard from "../components/DoctorCard.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
+import AppointmentForm from "../components/AppointmentForm.astro";
+import { clinic } from "../config/clinic";
+
+const previewServices = clinic.services.slice(0, 4);
+const previewDoctors = clinic.doctors.slice(0, 3);
+
+const trustPoints = [
+  {
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />`,
+    title: "Qualified Doctors",
+    description: "All our dentists hold advanced degrees and stay updated with the latest techniques.",
+  },
+  {
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />`,
+    title: "Modern Equipment",
+    description: "State-of-the-art dental technology for precise diagnostics and painless treatments.",
+  },
+  {
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />`,
+    title: "Easy Booking",
+    description: "Book instantly via WhatsApp or our online form. We confirm within 2 hours.",
+  },
+  {
+    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />`,
+    title: "Transparent Pricing",
+    description: "No hidden costs. Get a detailed treatment plan and quote before any procedure.",
+  },
+];
+---
+
+<BaseLayout>
+  <!-- Hero -->
+  <Hero />
+
+  <!-- Stats Strip -->
+  <section class="bg-primary py-8 md:py-10" aria-label="Clinic statistics">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 stagger-children">
+        <div class="text-center">
+          <p class="text-2xl md:text-3xl font-bold text-white font-heading">{clinic.stats.patientsServed}</p>
+          <p class="text-primary-light/80 text-sm mt-1">Patients Served</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl md:text-3xl font-bold text-white font-heading">⭐ {clinic.stats.googleRating}</p>
+          <p class="text-primary-light/80 text-sm mt-1">Google Rating</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl md:text-3xl font-bold text-white font-heading">{clinic.stats.googleReviews}</p>
+          <p class="text-primary-light/80 text-sm mt-1">Google Reviews</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl md:text-3xl font-bold text-white font-heading">{clinic.stats.yearsExperience}</p>
+          <p class="text-primary-light/80 text-sm mt-1">Years Experience</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section class="py-16 md:py-24 bg-surface" id="services-preview">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-2">Our Services</span>
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-text mb-3">
+          What We Offer
+        </h2>
+        <p class="text-text-muted max-w-2xl mx-auto">
+          From routine check-ups to advanced cosmetic procedures, we provide comprehensive dental care for the whole family.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+        {previewServices.map((service) => (
+          <ServiceCard service={service} compact={true} />
+        ))}
+      </div>
+      {clinic.services.length > 4 && (
+        <div class="text-center mt-10">
+          <a
+            href="/services"
+            class="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition-colors group"
+          >
+            View All Services
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="py-16 md:py-24 bg-surface-alt">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-2">Why Choose Us</span>
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-text mb-3">
+          Your Trust, Our Priority
+        </h2>
+        <p class="text-text-muted max-w-2xl mx-auto">
+          Here's why thousands of families trust {clinic.name} with their dental health.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+        {trustPoints.map((point) => (
+          <div class="bg-white rounded-2xl border border-border p-6 text-center hover:shadow-lg hover:border-primary/15 transition-all duration-300 group">
+            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/15 transition-colors">
+              <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={point.icon} />
+            </div>
+            <h3 class="text-lg font-heading font-semibold text-text mb-2">{point.title}</h3>
+            <p class="text-sm text-text-muted leading-relaxed">{point.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Doctors Preview -->
+  <section class="py-16 md:py-24 bg-surface">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-2">Our Team</span>
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-text mb-3">
+          Meet Our Doctors
+        </h2>
+        <p class="text-text-muted max-w-2xl mx-auto">
+          Experienced and compassionate professionals dedicated to your oral health.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children max-w-4xl mx-auto">
+        {previewDoctors.map((doctor) => (
+          <DoctorCard doctor={doctor} compact={true} />
+        ))}
+      </div>
+      <div class="text-center mt-10">
+        <a
+          href="/doctors"
+          class="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition-colors group"
+        >
+          View All Doctors
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-16 md:py-24 bg-surface-alt">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-2">Testimonials</span>
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-text mb-3">
+          What Our Patients Say
+        </h2>
+        <p class="text-text-muted max-w-2xl mx-auto">
+          Don't just take our word for it. Here's what our patients have to say.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children">
+        {clinic.testimonials.slice(0, 3).map((testimonial) => (
+          <TestimonialCard testimonial={testimonial} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Appointment Form -->
+  <AppointmentForm />
+
+  <!-- Map -->
+  <section class="bg-surface" aria-label="Our Location">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <div class="text-center mb-8">
+        <span class="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-2">Find Us</span>
+        <h2 class="text-2xl md:text-3xl font-heading font-bold text-text">Our Location</h2>
+      </div>
+    </div>
+    <div class="w-full h-72 md:h-96">
+      <iframe
+        src={clinic.address.embedSrc}
+        width="100%"
+        height="100%"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title={`${clinic.name} location on Google Maps`}
+      ></iframe>
+    </div>
+  </section>
+</BaseLayout>

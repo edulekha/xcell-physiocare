@@ -1,0 +1,97 @@
+---
+import { clinic } from "../config/clinic";
+
+const waLink = `https://wa.me/${clinic.whatsapp}?text=${encodeURIComponent("Hi, I found you on your website and wanted to ask about...")}`;
+---
+
+<section id="hero" class="relative overflow-hidden bg-gradient-to-br from-primary/5 via-white to-primary/10">
+  <!-- Background decoration -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-accent/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 lg:py-24 relative">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <!-- Text Content -->
+      <div class="animate-fade-in">
+        <!-- Google Rating Badge -->
+        <div class="inline-flex items-center gap-2 bg-white shadow-md rounded-full px-4 py-2 mb-6">
+          <div class="flex items-center gap-0.5">
+            {[1,2,3,4,5].map((star) => (
+              <svg class={`w-4 h-4 ${star <= Math.round(parseFloat(clinic.stats.googleRating)) ? 'text-amber-400' : 'text-gray-300'}`} fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+          <span class="font-semibold text-sm text-gray-800">{clinic.stats.googleRating}</span>
+          <span class="text-xs text-gray-500">({clinic.stats.googleReviews} reviews on Google)</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-text leading-tight mb-4">
+          {clinic.name}
+        </h1>
+
+        <p class="text-lg md:text-xl text-text-muted max-w-xl mb-8 leading-relaxed">
+          {clinic.tagline}. Trusted by <span class="font-semibold text-primary">{clinic.stats.patientsServed}</span> patients with <span class="font-semibold text-primary">{clinic.stats.yearsExperience}</span> years of excellence.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <a
+            href="#appointment"
+            id="hero-book-btn"
+            class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-7 py-3.5 rounded-xl text-base transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Book Appointment
+          </a>
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            id="hero-whatsapp-btn"
+            class="inline-flex items-center justify-center gap-2 bg-whatsapp hover:bg-whatsapp-dark text-white font-semibold px-7 py-3.5 rounded-xl text-base transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            WhatsApp Us
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Image -->
+      <div class="relative animate-slide-up hidden md:block">
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+          <img
+            src="/images/hero-clinic.jpg"
+            alt={`${clinic.name} - Modern dental clinic interior`}
+            class="w-full h-auto object-cover aspect-[4/3]"
+            width="640"
+            height="480"
+            loading="eager"
+          />
+          <!-- Overlay gradient -->
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+        </div>
+        <!-- Floating stats card -->
+        <div class="absolute -bottom-5 -left-5 bg-white rounded-xl shadow-xl p-4 animate-fade-in" style="animation-delay: 0.5s;">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-text">{clinic.stats.patientsServed}</p>
+              <p class="text-xs text-text-muted">Happy Patients</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,189 @@
+---
+import { clinic } from "../config/clinic";
+
+// Generate tomorrow's date for min attribute
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+const minDate = tomorrow.toISOString().split('T')[0];
+---
+
+<section id="appointment" class="py-16 md:py-24 bg-surface-alt">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-10">
+      <span class="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-2">Book an Appointment</span>
+      <h2 class="text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-text mb-3">
+        Schedule Your Visit
+      </h2>
+      <p class="text-text-muted max-w-lg mx-auto">
+        Fill out the form below and we'll confirm your appointment within 2 hours. You can also
+        <a href={`https://wa.me/${clinic.whatsapp}`} class="text-whatsapp font-semibold hover:underline" target="_blank" rel="noopener noreferrer">book via WhatsApp</a>.
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form
+      id="appointment-form"
+      action={clinic.formspreeEndpoint}
+      method="POST"
+      class="bg-white rounded-2xl shadow-lg border border-border p-6 md:p-10"
+    >
+      <!-- Formspree hidden fields -->
+      <input type="hidden" name="_subject" value={`New Appointment Request - ${clinic.name}`} />
+      <input type="hidden" name="_next" value={`${clinic.seo.siteUrl}/thank-you`} />
+      <!-- Honeypot -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Full Name -->
+        <div class="md:col-span-2">
+          <label for="form-name" class="block text-sm font-medium text-text mb-1.5">
+            Full Name <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="form-name"
+            name="name"
+            required
+            placeholder="e.g. Priya Sharma"
+            class="w-full px-4 py-3 border border-border rounded-xl text-text placeholder:text-text-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+          />
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label for="form-phone" class="block text-sm font-medium text-text mb-1.5">
+            Phone Number <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            id="form-phone"
+            name="phone"
+            required
+            pattern="[6-9][0-9]{9}"
+            maxlength="10"
+            placeholder="10-digit mobile number"
+            title="Enter a valid 10-digit Indian mobile number"
+            class="w-full px-4 py-3 border border-border rounded-xl text-text placeholder:text-text-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+          />
+          <p id="phone-error" class="text-xs text-red-500 mt-1 hidden">Please enter a valid 10-digit Indian mobile number</p>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="form-email" class="block text-sm font-medium text-text mb-1.5">
+            Email <span class="text-text-light">(optional)</span>
+          </label>
+          <input
+            type="email"
+            id="form-email"
+            name="email"
+            placeholder="your@email.com"
+            class="w-full px-4 py-3 border border-border rounded-xl text-text placeholder:text-text-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+          />
+        </div>
+
+        <!-- Service -->
+        <div>
+          <label for="form-service" class="block text-sm font-medium text-text mb-1.5">
+            Service Interested In
+          </label>
+          <select
+            id="form-service"
+            name="service"
+            class="w-full px-4 py-3 border border-border rounded-xl text-text focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm bg-white appearance-none"
+            style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.25rem;"
+          >
+            <option value="">Select a service</option>
+            {clinic.services.map((s) => (
+              <option value={s.title}>{s.title}</option>
+            ))}
+            <option value="General Consultation">General Consultation</option>
+          </select>
+        </div>
+
+        <!-- Preferred Date -->
+        <div>
+          <label for="form-date" class="block text-sm font-medium text-text mb-1.5">
+            Preferred Date
+          </label>
+          <input
+            type="date"
+            id="form-date"
+            name="preferred_date"
+            min={minDate}
+            class="w-full px-4 py-3 border border-border rounded-xl text-text focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+          />
+        </div>
+
+        <!-- Time Slot -->
+        <div>
+          <label for="form-time" class="block text-sm font-medium text-text mb-1.5">
+            Preferred Time Slot
+          </label>
+          <select
+            id="form-time"
+            name="preferred_time"
+            class="w-full px-4 py-3 border border-border rounded-xl text-text focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm bg-white appearance-none"
+            style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.25rem;"
+          >
+            <option value="">Select a time slot</option>
+            <option value="Morning (10 AM - 12 PM)">Morning (10 AM – 12 PM)</option>
+            <option value="Afternoon (12 PM - 4 PM)">Afternoon (12 PM – 4 PM)</option>
+            <option value="Evening (4 PM - 8 PM)">Evening (4 PM – 8 PM)</option>
+          </select>
+        </div>
+
+        <!-- Notes -->
+        <div class="md:col-span-2">
+          <label for="form-notes" class="block text-sm font-medium text-text mb-1.5">
+            Additional Notes <span class="text-text-light">(optional)</span>
+          </label>
+          <textarea
+            id="form-notes"
+            name="notes"
+            rows="3"
+            placeholder="Any specific concerns or questions..."
+            class="w-full px-4 py-3 border border-border rounded-xl text-text placeholder:text-text-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm resize-none"
+          ></textarea>
+        </div>
+
+        <!-- Submit -->
+        <div class="md:col-span-2">
+          <button
+            type="submit"
+            id="form-submit-btn"
+            class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg flex items-center justify-center gap-2 text-base"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Request Appointment
+          </button>
+          <p class="text-xs text-text-muted text-center mt-3">
+            We'll confirm your appointment within 2 hours via phone or WhatsApp.
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  // Phone validation
+  const phoneInput = document.getElementById('form-phone') as HTMLInputElement;
+  const phoneError = document.getElementById('phone-error');
+
+  phoneInput?.addEventListener('input', () => {
+    const value = phoneInput.value.replace(/\D/g, '');
+    phoneInput.value = value;
+
+    if (value.length > 0 && (value.length !== 10 || !/^[6-9]/.test(value))) {
+      phoneError?.classList.remove('hidden');
+      phoneInput.setCustomValidity('Please enter a valid 10-digit Indian mobile number');
+    } else {
+      phoneError?.classList.add('hidden');
+      phoneInput.setCustomValidity('');
+    }
+  });
+</script>
