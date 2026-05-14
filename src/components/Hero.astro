@@ -67,7 +67,7 @@ const waLink = `https://wa.me/${clinic.whatsapp}?text=${encodeURIComponent("Hi, 
       <div class="relative animate-slide-up hidden md:block">
         <div class="relative rounded-2xl overflow-hidden shadow-2xl">
           <img
-            src="/images/hero-clinic.jpg"
+            src={`${import.meta.env.BASE_URL}images/hero-clinic.jpg`}
             alt={`${clinic.name} - Modern dental clinic interior`}
             class="w-full h-auto object-cover aspect-[4/3]"
             width="640"

@@ -3,13 +3,14 @@ import { clinic } from "../config/clinic";
 
 const currentYear = new Date().getFullYear();
 const hasSocial = clinic.social.instagram || clinic.social.facebook || clinic.social.youtube;
+const base = import.meta.env.BASE_URL;
 
 const footerLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/services", label: "Services" },
-  { href: "/doctors", label: "Our Doctors" },
-  { href: "/contact", label: "Contact" },
+  { href: base, label: "Home" },
+  { href: `${base}about`, label: "About Us" },
+  { href: `${base}services`, label: "Services" },
+  { href: `${base}doctors`, label: "Our Doctors" },
+  { href: `${base}contact`, label: "Contact" },
 ];
 ---
 
@@ -19,7 +20,7 @@ const footerLinks = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
       <!-- Brand Column -->
       <div class="lg:col-span-1">
-        <a href="/" class="inline-block mb-4">
+        <a href={base} class="inline-block mb-4">
           <span class="text-2xl font-bold font-heading text-white">{clinic.brand.logoText}</span>
         </a>
         <p class="text-sm text-gray-400 leading-relaxed mb-6">

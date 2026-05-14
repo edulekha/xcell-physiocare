@@ -50,7 +50,7 @@ const pageDescription = `Explore our comprehensive ${clinic.category} services i
         </p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
           <a
-            href="/#appointment"
+            href={`${import.meta.env.BASE_URL}#appointment`}
             class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-xl transition-colors"
           >
             Book a Consultation

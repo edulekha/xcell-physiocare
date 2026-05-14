@@ -5,11 +5,12 @@ import { clinic } from "../config/clinic";
 const pageTitle = `About Us | ${clinic.name} - ${clinic.address.area}`;
 const pageDescription = `Learn about ${clinic.name}, established in ${clinic.established}. Our mission, team, and commitment to quality healthcare in ${clinic.address.area}.`;
 
+const base = import.meta.env.BASE_URL;
 const galleryImages = [
-  { src: "/images/gallery-1.jpg", alt: "Modern clinic reception area" },
-  { src: "/images/gallery-2.jpg", alt: "State-of-the-art treatment room" },
-  { src: "/images/gallery-3.jpg", alt: "Sterilization and hygiene protocols" },
-  { src: "/images/gallery-4.jpg", alt: "Comfortable waiting area" },
+  { src: `${base}images/gallery-1.jpg`, alt: "Modern clinic reception area" },
+  { src: `${base}images/gallery-2.jpg`, alt: "State-of-the-art treatment room" },
+  { src: `${base}images/gallery-3.jpg`, alt: "Sterilization and hygiene protocols" },
+  { src: `${base}images/gallery-4.jpg`, alt: "Comfortable waiting area" },
 ];
 
 const certifications = [
@@ -64,7 +65,7 @@ const certifications = [
         </div>
         <div class="relative">
           <img
-            src="/images/about-clinic.jpg"
+            src={`${import.meta.env.BASE_URL}images/about-clinic.jpg`}
             alt={`${clinic.name} - Clinic interior`}
             class="w-full rounded-2xl shadow-xl object-cover aspect-[4/3]"
             width="640"
@@ -185,7 +186,7 @@ const certifications = [
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a
-          href="/#appointment"
+          href={`${import.meta.env.BASE_URL}#appointment`}
           class="inline-flex items-center justify-center gap-2 bg-white text-primary font-semibold px-7 py-3.5 rounded-xl hover:bg-gray-50 transition-colors"
         >
           Book Appointment

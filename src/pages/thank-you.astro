@@ -47,7 +47,7 @@ const waLink = `https://wa.me/${clinic.whatsapp}?text=${waMessage}`;
           Confirm on WhatsApp
         </a>
         <a
-          href="/"
+          href={import.meta.env.BASE_URL}
           class="inline-flex items-center justify-center gap-2 bg-surface-alt hover:bg-surface-dark text-text font-semibold px-7 py-3.5 rounded-xl transition-colors border border-border"
         >
           Back to Home

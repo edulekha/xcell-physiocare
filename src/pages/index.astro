@@ -82,7 +82,7 @@ const trustPoints = [
       {clinic.services.length > 4 && (
         <div class="text-center mt-10">
           <a
-            href="/services"
+            href={`${import.meta.env.BASE_URL}services`}
             class="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition-colors group"
           >
             View All Services
@@ -140,7 +140,7 @@ const trustPoints = [
       </div>
       <div class="text-center mt-10">
         <a
-          href="/doctors"
+          href={`${import.meta.env.BASE_URL}doctors`}
           class="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition-colors group"
         >
           View All Doctors
